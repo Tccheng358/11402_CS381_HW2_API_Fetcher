@@ -23,6 +23,8 @@ try:
         print("Success! Data fetched and saved to ip_data.json")
     else:
         print(f"Failed to fetch data. HTTP Status: {response.status_code}")
+        import sys
+        sys.exit(1) # This forces GitHub to show a red "Failure" icon
 
 except Exception as e:
     print(f"An error occurred: {e}")
