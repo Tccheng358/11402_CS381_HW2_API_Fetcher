@@ -1,28 +1,30 @@
 import requests
 import json
 import os
+import csv
 
-# Fetch the API key securely from GitHub Secrets
 api_key = os.environ.get("IPSTACK_API_KEY")
-
-# The IPstack API endpoint (checking the server's own IP)
 url = f"http://api.ipstack.com/check?access_key={api_key}"
 
 try:
-    # Send the GET request
     response = requests.get(url)
-    
-    # Check if the request was successful (200 OK)
     if response.status_code == 200:
         data = response.json()
         
-        # Save the data to a JSON file
+        # 1. Save as JSON
         with open('ip_data.json', 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
+        
+        # 2. Save as CSV (Flattening the data)
+        with open('ip_data.csv', 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            # Writing Header
+            writer.writerow(["IP", "Country", "City", "Latitude", "Longitude"])
+            # Writing Data row
+            writer.writerow([data.get("ip"), data.get("country_name"), data.get("city"), data.get("latitude"), data.get("longitude")])
             
-        print("Success! Data fetched and saved to ip_data.json")
+        print("Success! Both JSON and CSV files saved.")
     else:
-        print(f"Failed to fetch data. HTTP Status: {response.status_code}")
-
+        print(f"Failed. Status: {response.status_code}")
 except Exception as e:
-    print(f"An error occurred: {e}")
+    print(f"Error: {e}")
