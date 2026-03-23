@@ -31,10 +31,8 @@ jobs:
         IPSTACK_API_KEY: ${{ secrets.IPSTACK_API_KEY }}
       run: python api.py
 
-    - name: Upload output files  # Fixed: Now 4 spaces!
+    - name: Upload output files
       uses: actions/upload-artifact@v4
       with:
         name: ip-geolocation-results
-        path: |
-          ip_data.json
-          ip_data.csv
+        path: ip_data* # This tells GitHub: "Find every file that starts with ip_data"
