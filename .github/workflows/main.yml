@@ -1,9 +1,12 @@
 name: Daily IP API Fetcher
 
 on:
+  push:
+    branches:
+      - main  # This tells GitHub to run every time you save/push code
   schedule:
-    - cron: '0 0 * * *' # Triggers automatically once a day at midnight UTC
-  workflow_dispatch:    # Adds a button to let you trigger it manually!
+    - cron: '0 0 * * *'
+  workflow_dispatch:  # Adds a button to let you trigger it manually!
 
 jobs:
   run-api-script:
