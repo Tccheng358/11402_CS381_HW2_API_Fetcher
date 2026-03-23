@@ -28,8 +28,10 @@ jobs:
         IPSTACK_API_KEY: ${{ secrets.IPSTACK_API_KEY }}
       run: python api.py
 
-    - name: Upload output JSON file
+   - name: Upload output files
       uses: actions/upload-artifact@v4
       with:
-        name: ip-geolocation-data
-        path: ip_data.json
+        name: ip-geolocation-results
+        path: |
+          ip_data.json
+          ip_data.csv
